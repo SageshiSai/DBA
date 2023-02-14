@@ -1,0 +1,29 @@
+CREATE DATABASE "NAMEdb" CHARACTER SET "Codificacion(utf8)"  COLLATE utf8_bin;
+CREATE TABLE cliente(
+    DNI VARCHAR (9) PRIMARY KEY,
+    Nombre VARCHAR (20),
+    Apellido VARCHAR (50),
+    Fech_nac DATE,
+    tfno VARCHAR (9)
+);
+CREATE TABLE compra(
+   DNI VARCHAR (9),
+   Codigo VARCHAR (9),
+   PRIMARY KEY (DNI, Codigo),
+   CONSTRAINT FK1
+   FOREIGN KEY (Codigo) REFERENCES producto(Codigo)
+);
+CREATE TABLE Producto(
+    Nombre VARCHAR (20),
+    Codigo VARCHAR (9) PRIMARY KEY,
+    Precio DOUBLE,
+    NIF VARCHAR (9),
+    CONSTRAINT NIF
+    FOREIGN KEY (NIF) REFERENCES Proveedor(NIF)
+);
+CREATE TABLE Proveedor(
+    Nombre VARCHAR (20),
+    Direccion VARCHAR (50),
+    NIF VARCHAR PRIMARY KEY
+);
+
