@@ -8,11 +8,19 @@ CREATE TABLE alumnos2 (
 DELIMITER $$
 DROP TRIGGER IF EXISTS crear_email$$
 CREATE TRIGGER crear_email
-BEFORE INSERT
+AFTER INSERT
 ON alumnos2 
 FOR EACH ROW
 BEGIN
-	IF NEW.nombre IS NOT NULL AND NEW.apellido1 IS NOT NULL AND NEW.apellido2 IS NOT NULL THEN
-    SET NEW.email = LOWER(CONCAT(nombre, '.', apellido1, '.', apellido2, '@', "fpzornotza.com"));
-    END IF;
+    SET NEW.email = LOWER(CONCAT(NEW.nombre, '.', NEW.apellido1, '.', NEW.apellido2, "@fpzornotza.com"));
+END$$
+DELIMITER $$
+DROP TRIGGER IF EXISTS AUMENTAR_NOTA$$
+CREATE TRIGGER AUMENTAR_NOTA
+BEFORE UPDATE
+ON alumnos FOR EACH ROW
+BEGIN
+IF NEW.nota > OLD.nota THEN
+SET NEW.nota=NEW.nota*1.10;
+END IF;
 END$$
