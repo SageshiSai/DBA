@@ -24,3 +24,19 @@ IF NEW.nota > OLD.nota THEN
 SET NEW.nota=NEW.nota*1.10;
 END IF;
 END$$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS listar_productos$$
+CREATE PROCEDURE listar_productos (IN vgama VARCHAR(50))
+BEGIN
+SELECT * FROM producto
+WHERE producto.gama=vgama;
+END$$
+--LLAMADA
+CALL listar_productos ("Herramientas")
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS crear_email$$
+CREATE PROCEDURE crear_email (IN vnombre VARCHAR(50), vapellido1 VARCHAR(50), vapellido2 VARCHAR(50), dominio VARCHAR(50))
+BEGIN
+SELECT * FROM 
