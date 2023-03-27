@@ -30,3 +30,25 @@ RETURN nombre;
 END;;
 DELIMITER ;;
 SELECT obtener_nombrecliente(1);;
+
+--PROCEDIMIENTO
+DELIMITER $$
+DROP PROCEDURE IF EXISTS get_infocliente$$
+CREATE PROCEDURE get_infocliente()
+BEGIN
+SELECT * FROM cliente;
+END$$
+CALL get_infocliente();
+
+DELIMITER ;;
+DROP PROCEDURE IF EXISTS inserta_pago;;
+CREATE PROCEDURE inserta_pago(IN vcodigo_cliente INT,IN vforma_pago VARCHAR(50),IN vtotal INT)
+BEGIN
+IF vtotal > 10000 THEN
+    SET vtotal = vtotal * 0.9;
+END IF;
+INSERT INTO pago (codigo_cliente, forma_pago,total)
+VALUES(vcodigo_cliente,vforma_pago,vtotal);
+END;;
+DELIMITER ;;
+CALL inserta_pago(1,"PayPal",15000);;
