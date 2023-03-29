@@ -52,3 +52,22 @@ VALUES(vcodigo_cliente,vforma_pago,vtotal);
 END;;
 DELIMITER ;;
 CALL inserta_pago(1,"PayPal",15000);;
+
+DELIMITER ;;
+DROP PROCEDURE IF EXISTS inserta_alumno;;
+CREATE PROCEDURE inserta_alumno(IN vnombre VARCHAR(20), IN vapellido1 VARCHAR(20), IN vapellido2 VARCHAR(20), IN vnota FLOAT, IN vedad INT)
+BEGIN
+DECLARE tipoedad VARCHAR(30);
+IF (vedad >= 60) THEN
+    SET tipoedad = "JUBILADO";
+ELSEIF (vedad >= 25 AND vedad < 60) THEN
+    SET tipoedad = "ADULTO";
+ELSEIF (vedad >= 12 AND vedad < 25) THEN
+    SET tipoedad = "JOVEN";
+ELSEIF (vedad < 12) THEN
+    SET tipoedad = "NIÑO";
+END IF;
+INSERT INTO alumnos (nombre, apellido1, apellido2, nota, edad) VALUES (vnombre, vapellido1, vapellido2, vnota, tipoedad);
+END;;
+DELIMITER ;;
+CALL inserta_alumno("Kevin", "Patiño", "Sanchez", 10, 19);;
